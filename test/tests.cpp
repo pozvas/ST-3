@@ -19,9 +19,9 @@ class TimedDoorTest : public ::testing::Test {
     TimedDoor door;
     MockTimerClient *mockClient;
     Timer timer;
-
+ public:
     TimedDoorTest() : door(500), timer() {}
-
+ protected:
     void SetUp() override {
         mockClient = new MockTimerClient();
     }
@@ -52,6 +52,7 @@ TEST_F(TimedDoorTest, opened_exception_throw) {
 }
 
 TEST_F(TimedDoorTest, closed_exception_throw) {
+    door.unlock();
     door.lock();
     EXPECT_THROW(door.throwState(), std::runtime_error);
 }

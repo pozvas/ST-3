@@ -13,9 +13,11 @@ void Timer::sleep(int seconds) {
      std::this_thread::sleep_for(std::chrono::seconds(seconds));
 }
 
-void Timer::tregister(int seconds, TimerClient* client) {
+void Timer::tregister(int seconds, TimerClient* timerClient) {
+    client = timerClient;
     sleep(seconds);
     client->Timeout();
+    client = nullptr;
 }
 
 DoorTimerAdapter::DoorTimerAdapter(TimedDoor& door) : door(door) {}
