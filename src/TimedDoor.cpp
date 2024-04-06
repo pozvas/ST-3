@@ -1,12 +1,16 @@
-#include "TimedDoor.h"
-#include <thread>
-#include <chrono>
-#include <stdexcept>
+// Copyright 2024 Pozdnyakov Vasya
 
-using namespace std::chrono_literals;
+#include <stdexcept>
+#include <thread> // NOLINT [build/c++11]
+#include <chrono> // NOLINT [build/c++11]
+
+
+#include "TimedDoor.h"
+
+
 
 void Timer::sleep(int seconds) {
-    std::this_thread::sleep_for(seconds * 1s);
+     std::this_thread::sleep_for(std::chrono::seconds(seconds));
 }
 
 void Timer::tregister(int seconds, TimerClient* client) {
@@ -38,15 +42,14 @@ void TimedDoor::lock() {
     isOpened = false;
 }
 
-int TimedDoor::getTimeOut() const{
+int TimedDoor::getTimeOut() const {
     return iTimeout;
 }
 
 void TimedDoor::throwState() {
     if (isOpened) {
         throw std::runtime_error("Door is opened!");
-    }
-    else {
+    } else {
         throw std::runtime_error("Door is closed!");
     }
 }
