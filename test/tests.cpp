@@ -20,7 +20,7 @@ class TimedDoorTest : public ::testing::Test {
     MockTimerClient *mockClient;
     Timer timer;
  public:
-    TimedDoorTest() : door(500), timer() {}
+    TimedDoorTest() : door(1), timer() {}
  protected:
     void SetUp() override {
         mockClient = new MockTimerClient();
@@ -79,5 +79,5 @@ TEST_F(TimedDoorTest, timeout_no_throws_on_locked) {
 
 TEST_F(TimedDoorTest, timer_calls_timeout) {
     EXPECT_CALL(*mockClient, Timeout()).Times(1);
-    timer.tregister(100, mockClient);
+    timer.tregister(1, mockClient);
 }
